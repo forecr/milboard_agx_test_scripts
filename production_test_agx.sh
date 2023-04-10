@@ -162,7 +162,7 @@ function test_menu {
 			18 )
 				echo "Temperature Sensor Test"
 				if [ -d "/sys/bus/i2c/devices/1-0049" ]; then
-					gnome-terminal -- watch -n 0.1 cat /sys/bus/i2c/devices/1-0049/hwmon/hwmon1/temp1_input
+					gnome-terminal -- watch -n 0.1 cat /sys/bus/i2c/devices/1-0049/hwmon/hwmon*/temp1_input
 				else
 					echo "Temperature Sensor could not found"
 				fi
