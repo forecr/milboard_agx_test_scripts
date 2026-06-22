@@ -6,7 +6,7 @@ if [ "$(whoami)" != "root" ] ; then
 fi
 
 # Check the scipts' folder
-SCRIPTS_FOLDER=${PWD}
+SCRIPTS_FOLDER=$(dirname $(realpath $0))
 if [ $# -eq 1 ]; then
 	SCRIPTS_FOLDER=$1
 fi
@@ -24,6 +24,8 @@ if [ -d "$SCRIPTS_FOLDER" ]; then
 	echo "$SCRIPTS_FOLDER folder exists"
 	chmod +x $SCRIPTS_FOLDER/enable_can_agx.sh
 	chmod +x $SCRIPTS_FOLDER/iperf3_*.sh
+	chmod +x $SCRIPTS_FOLDER/test_*.sh
+	echo "All script files made executable"
 else
 	echo "$SCRIPTS_FOLDER folder does not exist"
 	echo "Quitting ..."
@@ -85,6 +87,7 @@ function test_menu {
 		echo "16) CAN Bus-2 (Send) Test"
 		echo "17) CAN Bus-2 (Receive) Test"
 		echo "18) Temperature Sensor Test"
+		echo "19) Fan Test"
 		read -p "Type the test number (or quit) [1/.../q]: " choice
 		echo ""
 
@@ -169,6 +172,10 @@ function test_menu {
 			18 )
 				echo "Temperature Sensor Test"
 				sudo gnome-terminal -- watch -n 0.1 sensors tmp102-*
+				;;
+			19 )
+				echo "Fan Test"
+				sudo gnome-terminal -- $SCRIPTS_FOLDER/test_fan.sh
 				;;
 			[Qq]* )
 				echo "Quitting ..."
